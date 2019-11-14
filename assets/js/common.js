@@ -7,6 +7,7 @@ $(function() {
         $('#startDate').val(start.format('YYYY-MM-DD'));
         $('#endDate').val(end.format('YYYY-MM-DD'));
         populateArea(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+		populateStayByPayer(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
     }
 
     $('#reportrange').daterangepicker({
@@ -52,6 +53,32 @@ $(function() {
             }
         });
     }
+	function populateStayByPayer(start, end) {
+        const param = { start: start, end: end };
+        console.log(param);
+        $.ajax({
+            type: "POST",
+            url: "stays_by_payer.php",
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            async: true,
+            data: JSON.stringify(param),
+            success: function (result) {
+                $("#donut-example").empty();
+                if (result !== '') {
+					Morris.Donut({
+						element: 'donut-example',
+						data: result,
+						resize:true
+					});
+                }
+            },
+            error: function (xhr, status, error) {
+				// debugger;
+                console.log('failed to load' + error);
+            }
+        });
+    }
 
 });
 // Morris.Area({
@@ -69,7 +96,7 @@ $(function() {
 //     ykeys: ['a', 'b'],
 //     labels: ['Series A', 'Series B']
 // });
-
+/*
 Morris.Line({
     element: 'area-graph-2',
     data: [
@@ -82,17 +109,19 @@ Morris.Line({
     ykeys: ['a', 'b'],
     labels: ['Series A', 'Series B']
 });
+*/
 
-Morris.Donut({
+/*Morris.Donut({
     element: 'donut-example',
     data: [
         {label: "Download Sales", value: 12},
         {label: "In-Store Sales", value: 30},
         {label: "Mail-Order Sales", value: 20}
     ]
-});
+});*/
 
-Morris.Bar({
+
+/*Morris.Bar({
   element: 'avg-stay',
   data: [
     { d: '1', a: 10 },
@@ -104,8 +133,9 @@ Morris.Bar({
   ykeys: ['a', 'b'],
   labels: ['Length of Days in Stay', 'Percent']
 });
-
+*/
 /*
+
 Morris.Bar({
   element: 'morrisBar1',
   data: [
@@ -123,7 +153,8 @@ Morris.Bar({
   hideHover: 'auto',
   resize: true
 });
-
+*/
+/*
 
 Morris.Bar({
   element: 'morrisBar2',
