@@ -17,11 +17,11 @@ if(! $result ) {
 $chart_data = "[";
 while($row = mysqli_fetch_array($result))
 {
-	//$chart_data .= "{ date:'".$row["date"]."', no_of_days:".$row["no_of_days"].", count:".$row["count"]."}, ";
-	$chart_data .= "{'y':".$row["year"].",a:".$row["a"].",b:".$row["b"]."}, ";
+	$chart_data .= "{\"y\":\"".$row["year"]."\", \"a\":".$row["a"].", \"b\":".$row["b"]."},";
 }
-$chart_data = substr($chart_data, 0, -2);
+$chart_data = substr($chart_data, 0, -1);
 $chart_data .= "]";
-echo json_encode($chart_data);
+header('Content-Type: application/json');
+$someArray = json_decode($chart_data);
+echo $chart_data;
 ?>
- 

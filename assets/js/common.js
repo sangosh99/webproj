@@ -37,7 +37,7 @@ $(function() {
             success: function (result) {
                 $("#area-graph").empty();
                 if (result !== '') {
-                    var donut = Morris.Donut({
+                    var donut = Morris.Area({
                         element: 'area-graph',
                         data: result,
                         xkey: 'y',
