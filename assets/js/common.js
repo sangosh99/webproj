@@ -4,6 +4,9 @@ $(function() {
 
     function cb(start, end) {
         $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        $('#startDate').val(start.format('YYYY-MM-DD'));
+        $('#endDate').val(end.format('YYYY-MM-DD'));
+        populateArea(start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
     }
 
     $('#reportrange').daterangepicker({
@@ -18,23 +21,54 @@ $(function() {
             'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
         }
     }, cb);
+
     cb(start, end);
+
+    function populateArea(start, end) {
+        const param = { start: start, end: end };
+        console.log(param);
+        $.ajax({
+            type: "POST",
+            url: "graph.php",
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            async: true,
+            data: JSON.stringify(param),
+            success: function (result) {
+                var data = eval("(" + result.d + ")");
+                $("#area-graph").empty();
+                if (data.status == 0) {
+                    var donut = Morris.Donut({
+                        element: 'area-graph',
+                        data: data,
+                        xkey: 'y',
+                        ykeys: ['a', 'b'],
+                        labels: ['Series A', 'Series B']
+                    });
+                }
+            },
+            error: function () {
+                console.log('failed to load');
+            }
+        });
+    }
+
 });
-Morris.Area({
-    element: 'area-graph',
-    data: [
-        { y: '2006', a: 100, b: 90 },
-        { y: '2007', a: 75,  b: 65 },
-        { y: '2008', a: 50,  b: 40 },
-        { y: '2009', a: 75,  b: 65 },
-        { y: '2010', a: 50,  b: 40 },
-        { y: '2011', a: 75,  b: 65 },
-        { y: '2012', a: 100, b: 90 }
-    ],
-    xkey: 'y',
-    ykeys: ['a', 'b'],
-    labels: ['Series A', 'Series B']
-});
+// Morris.Area({
+//     element: 'area-graph',
+//     data: [
+//         { y: '2006', a: 100, b: 90 },
+//         { y: '2007', a: 75,  b: 65 },
+//         { y: '2008', a: 50,  b: 40 },
+//         { y: '2009', a: 75,  b: 65 },
+//         { y: '2010', a: 50,  b: 40 },
+//         { y: '2011', a: 75,  b: 65 },
+//         { y: '2012', a: 100, b: 90 }
+//     ],
+//     xkey: 'y',
+//     ykeys: ['a', 'b'],
+//     labels: ['Series A', 'Series B']
+// });
 
 Morris.Line({
     element: 'area-graph-2',
