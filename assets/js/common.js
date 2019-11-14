@@ -35,20 +35,20 @@ $(function() {
             async: true,
             data: JSON.stringify(param),
             success: function (result) {
-                var data = eval("(" + result.d + ")");
                 $("#area-graph").empty();
-                if (data.status == 0) {
+                if (result !== '') {
                     var donut = Morris.Donut({
                         element: 'area-graph',
-                        data: data,
+                        data: result,
                         xkey: 'y',
                         ykeys: ['a', 'b'],
                         labels: ['Series A', 'Series B']
                     });
                 }
             },
-            error: function () {
-                console.log('failed to load');
+            error: function (xhr, status, error) {
+				// debugger;
+                console.log('failed to load' + error);
             }
         });
     }
@@ -105,7 +105,7 @@ Morris.Bar({
   labels: ['Length of Days in Stay', 'Percent']
 });
 
-
+/*
 Morris.Bar({
   element: 'morrisBar1',
   data: [
@@ -138,6 +138,7 @@ Morris.Bar({
   ykeys: ['a', 'b'],
   labels: ['Series A', 'Series B'],
 });
+*/
 
 
 
