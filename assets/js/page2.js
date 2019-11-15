@@ -1,3 +1,4 @@
+
 $(function() {
     var start = moment().subtract(29, 'days');
     var end = moment();
@@ -38,7 +39,7 @@ $(function() {
                 var data = eval("(" + result.d + ")");
                 $("#area-graph").empty();
                 if (data.status == 0) {
-                    var donut = Morris.Donut({
+                    var donut = Morris.Bar({
                         element: 'area-graph',
                         data: data,
                         xkey: 'y',
@@ -54,3 +55,11 @@ $(function() {
     }
 
 });
+
+
+
+
+
+
+
+

@@ -33,7 +33,7 @@ $(function() {
         console.log(param);
         $.ajax({
             type: "POST",
-            url: "graph.php",
+            url: "graph6.php",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             async: true,
@@ -63,7 +63,7 @@ $(function() {
         console.log(param);
         $.ajax({
             type: "POST",
-            url: "graph2.php",
+            url: "graph7.php",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             async: true,
@@ -91,7 +91,7 @@ $(function() {
         console.log(param);
         $.ajax({
             type: "POST",
-            url: "graph3.php",
+            url: "graph8.php",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             async: true,
@@ -119,7 +119,7 @@ $(function() {
         console.log(param);
         $.ajax({
             type: "POST",
-            url: "graph4.php",
+            url: "graph9.php",
             contentType: "application/json; charset=utf-8",
             dataType: 'json',
             async: true,
